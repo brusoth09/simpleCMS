@@ -26,8 +26,8 @@ Added Features
 5. Flyway is used for database migration.
 6. Bootstrap is used front end framework.
 7. For admin view
-    a. admin can create a editor
-    b. admin can suspend or enable user
+8.  a. admin can create a editor
+9.  b. admin can suspend or enable user
 8. For editor can access the WYSIWYG editor.
 9. He can save the post to draft, can view preview, can make ready to publish.
 
