@@ -19,6 +19,7 @@ Installation
 
 
 Added Features
+
 1. Spring MVC framework is used in the project.
 2. Maven is used as build and management tool.
 3. Spring Security used as security restriction.
