@@ -13,6 +13,7 @@
 </head>
 <body>
 <div class="container">
+    <div id="wrapper">
     <h3>Admin Panel</h3>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -24,16 +25,6 @@
         <li><a href="#editors" role="tab" data-toggle="tab">
             <i class="fa fa-user"></i> Editors
         </a>
-        </li>
-        <li>
-            <a href="#approvals" role="tab" data-toggle="tab">
-                <i class="fa fa-envelope"></i> Approvals
-            </a>
-        </li>
-        <li>
-            <a href="#posts" role="tab" data-toggle="tab">
-                <i class="fa fa-cog"></i> Posts
-            </a>
         </li>
     </ul>
     <!-- Tab panes -->
@@ -72,11 +63,11 @@
                             <td><c:choose>
                                     <c:when test="${user.enabled}">
                                         <button name="suspend" value="${user.username}" class="btn btn-info"
-                                                onclick="location.href='${pageContext.request.contextPath}/user/suspend?suspend=${user.username}'">Suspend</button>
+                                                onclick="location.href='${pageContext.request.contextPath}/user/suspend?suspend=${user.username}&enabled=${user.enabled}'">Suspend</button>
                                     </c:when>
                                     <c:otherwise>
                                         <button  name="suspend" value="${user.username}" class="btn btn-info"
-                                                onclick="location.href='${pageContext.request.contextPath}/user/suspend?suspend=${user.username}'">Enable</button>
+                                                onclick="location.href='${pageContext.request.contextPath}/user/suspend?suspend=${user.username}&enabled=${user.enabled}'">Enable</button>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
@@ -92,6 +83,7 @@
             <a href="${pageContext.request.contextPath}/post/view">View Posts</a>
         </div>
     </div>
+        </div>
 
 </div>
 </div>

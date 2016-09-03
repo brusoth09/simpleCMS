@@ -33,9 +33,6 @@ public class RoleDao {
         query.setParameter("username", userName);
         Role role = (Role)query.uniqueResult();
         session.close();
-        if(role == null){
-            return false;
-        }
-        return true;
+        return role != null;
     }
 }

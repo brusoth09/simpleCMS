@@ -10,3 +10,36 @@
 #rich-text-title{
     margin: 10px;
 }
+
+.cover {
+    position: relative;
+    width: 100%; /* for IE 6 */
+}
+
+.cover h2 {
+    position: absolute;
+    top: 200px;
+    left: 0;
+    width: 100%;
+}
+
+.cover #ItemPreview{
+    width: 100%;
+    height: 400px;
+}
+
+#post-title{
+    width: 400px;
+    margin-bottom: 10px;
+
+}
+
+#post-file{
+    margin-bottom: 10px;
+}
+
+.fill {
+    margin: 0;
+    overflow-y:scroll;
+}
+

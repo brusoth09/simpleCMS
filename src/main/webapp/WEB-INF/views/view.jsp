@@ -17,43 +17,26 @@
 <div class="container">
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        <div class="login-logo">
-                            <a href="/login"><b>Simple</b>CMS</a>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/post/create">Create Post</a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/post/view">View Posts</a>
-                </li>
-
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
+       <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <c:forEach var="post" items="${posts}">
-                            <h1>  <c:out value="${post.title}"/> </h1>
-                            <%--</div>--%>
-                            <h3><c:out value="${post.content}"/> </h3>
-                            <h3><c:out value="${post.status}"/> </h3>
-                            <br>
-                            <form action="${pageContext.request.contextPath}/post/state" method="post">
-                                <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>'
-                                <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">change Status</button>
-                            </form>
-
-
+                            <div class="panel panel-default project-list">
+                                <div class="panel-heading"><h3>  <c:out value="${post.title}"/></h3><span class="tag tag-default"><h6><c:out value="${post.status}"/> </h6></span></div>
+                                <%--</div>--%>
+                                <div class="panel-body">
+                                    <p><c:out value="${post.content}"/> </p>
+                                    <br>
+                                </div>
+                                <div class="panel-footer">
+                                    <form action="${pageContext.request.contextPath}/post/state" method="post">
+                                        <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>'
+                                        <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">change Status</button>
+                                    </form>
+                                </div>
+                            </div>
                         </c:forEach>
                             <%--<div id="cover-image" style="background-image: url(${post.image_path})">--%>
 
@@ -80,7 +63,7 @@
     }
 
     function savePost() {
-        var data = {}
+        var data = {};
         data["title"] = $("#post-title").val();
         data["content"] = $("#post-content").val();
 

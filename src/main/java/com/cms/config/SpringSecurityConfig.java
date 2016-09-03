@@ -53,7 +53,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password")
                 .and().csrf()
                 .and()
-                .logout().logoutSuccessUrl("/login?logout").and()
+                .logout().logoutUrl("/j_spring_security_logout").logoutSuccessUrl("/login?logout").and()
                 .exceptionHandling().accessDeniedPage("/403.jsp");
 
         httpSecurity.csrf().disable();

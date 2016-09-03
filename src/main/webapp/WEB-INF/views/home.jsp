@@ -16,31 +16,6 @@
 <body>
 <div class="container">
     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        <div class="login-logo">
-                            <a href="/login"><b>Simple</b>CMS</a>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/home">Create Post</a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/post/view">View Posts</a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/admin">Admin View</a>
-                </li>
-
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -49,13 +24,13 @@
                         <form:form class="well" method="post" modelAttribute="post" action="${pageContext.request.contextPath}/post/create" enctype="multipart/form-data" >
                             <h2 id="rich-text-title">Edit Your Post</h2>
                             <form:hidden path="blog_post_id" />
-                            <form:input id="post-title" path="title" placeHolder="Title"></form:input>
-                            Please select a file to upload : <input type="file" name="image" />
+                            <form:input id="post-title" path="title" placeHolder="Title" name="post-title"></form:input><br/>
+                            Please select cover image to upload : <input id="post-file" type="file" name="image" />
                             <textarea name="content" id="post-content">Easy (and free!) You should check out our premium features.</textarea>
                             <div id="rich-text-btn-group" class="btn-group btn-group-sm">
-                                <button id="preview-button" type="submit" name="action" value="preview" class="btn btn-primary btn-sm">Preview</button>
-                                <button id="drafts-button"  type="submit" name="action" value="draft" class="btn btn-primary btn-sm">Save to Drafts</button>
-                                <button type="submit" name="action" class="btn btn-primary btn-sm" value="publish">Ready to Publish</button>
+                                <button id="preview-button" disabled="true" type="submit" name="action" value="preview" class="btn btn-primary btn-sm">Preview</button>
+                                <button id="drafts-button"  disabled="true" type="submit" name="action" value="draft" class="btn btn-primary btn-sm">Save to Drafts</button>
+                                <button id="rp-button" disabled="true" type="submit" name="action" class="btn btn-primary btn-sm" value="publish">Ready to Publish</button>
                             </div>
                         </form:form>
                     </div>
@@ -66,6 +41,7 @@
     </div>
 </div>
 <script>
+
     jQuery(document).ready(function($) {
         $("#drafts-button").click(function(event) {
             savePost();
@@ -74,6 +50,18 @@
         $("#preview-button").click(function(event) {
             openPreview();
         });
+
+        $(document.body).on('input', '#post-title' ,function(){
+            if($('#post-title').val() == ''){
+                $('#preview-button').prop("disabled",true);
+                $('#drafts-button').prop("disabled",true);
+                $('#rp-button').prop("disabled",true);
+            } else {
+                $('#preview-button').prop("disabled",false);
+                $('#drafts-button').prop("disabled",false);
+                $('#rp-button').prop("disabled",false);
+            }
+        });
     });
 
     function openPreview() {
@@ -81,7 +69,7 @@
     }
 
     function savePost() {
-        var data = {}
+        var data = {};
         data["title"] = $("#post-title").val();
         data["content"] = $("#post-content").val();
 

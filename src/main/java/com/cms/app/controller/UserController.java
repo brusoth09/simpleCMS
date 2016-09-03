@@ -56,10 +56,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/suspend", method = RequestMethod.GET)
-    public String updateUserEnabled(@ModelAttribute("userForm") User user, @RequestParam(value = "suspend") String suspend,
+    public String updateUserEnabled(@ModelAttribute("userForm") User user, @RequestParam(value = "suspend") String suspend,@RequestParam(value = "enabled") Boolean enabled,
                              BindingResult result, Model model, final RedirectAttributes redirectAttributes){
 
         user.setUsername(suspend);
+        user.setEnabled(enabled);
         logger.debug("saveOrUpdateUser() : {}", user);
         userService.updateUserEnabled(user);
         return "redirect:/admin";
