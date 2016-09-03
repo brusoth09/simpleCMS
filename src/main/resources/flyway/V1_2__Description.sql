@@ -20,6 +20,7 @@ CREATE TABLE blog_posts (
   post_image MEDIUMBLOB,
   content TEXT,
   status VARCHAR(20),
+  publish DATETIME,
   created DATETIME,
   modified DATETIME,
   username varchar(45) NOT NULL,

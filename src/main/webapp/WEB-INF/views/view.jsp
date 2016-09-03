@@ -24,17 +24,31 @@
                     <div class="col-lg-12">
                         <c:forEach var="post" items="${posts}">
                             <div class="panel panel-default project-list">
-                                <div class="panel-heading"><h3>  <c:out value="${post.title}"/></h3><span class="tag tag-default"><h6><c:out value="${post.status}"/> </h6></span></div>
+                                <div class="panel-heading">
+                                    <h3>  <c:out value="${post.title}"/></h3><span class="tag tag-default"><h6><c:out value="${post.status}"/> </h6></span>
+                                    <p>Publish Date: <input type="text" id="datepicker"></p>
+                                </div>
                                 <%--</div>--%>
                                 <div class="panel-body">
                                     <p><c:out value="${post.content}"/> </p>
                                     <br>
                                 </div>
                                 <div class="panel-footer">
-                                    <form action="${pageContext.request.contextPath}/post/state" method="post">
-                                        <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>'
-                                        <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">change Status</button>
-                                    </form>
+                                    <div class="row">
+                                        <form class="col-md-2" action="${pageContext.request.contextPath}/post/state" method="post">
+                                            <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>
+                                            <input type="hidden" name="date" id="date" value="${post.publish}">
+                                            <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">change status</button>
+                                        </form>
+                                        <form class="col-md-2" action="${pageContext.request.contextPath}/post/previews" method="post">
+                                            <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>
+                                            <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">Preview</button>
+                                        </form>
+                                        <form class="col-md-2" action="${pageContext.request.contextPath}/post/edit" method="post">
+                                            <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>
+                                            <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">Edit</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </c:forEach>
@@ -56,6 +70,19 @@
         $("#preview-button").click(function(event) {
             openPreview();
         });
+    });
+
+    $( function() {
+        var $datepicker = $('#datepicker');
+        $datepicker.datepicker();
+        $datepicker.datepicker('setDate', new Date());
+    } );
+
+    $("#datepicker").datepicker({
+        onSelect: function (dateText) {
+            $('input[name="date"]').val($("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' }).val());
+
+        }
     });
 
     function openPreview() {

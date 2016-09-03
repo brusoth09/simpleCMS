@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/iCheck/square/blue.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/dist/css/simplecms/simplecms.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/dist/css/simplecms/simpleSideBar.css">
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,6 +26,7 @@
     <![endif]-->
 
     <script src="${pageContext.request.contextPath}/plugins/jQuery/jQuery-2.2.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/plugins/iCheck/icheck.min.js"></script>
     <sitemesh:write property='head'/>
@@ -41,7 +42,7 @@
                 <li class="sidebar-brand">
                     <a href="#">
                         <div class="login-logo">
-                            <a href="/login"><b>Simple</b>CMS</a>
+                            <a href="${pageContext.request.contextPath}/home"><b>Simple</b>CMS</a>
                         </div>
                     </a>
                 </li>

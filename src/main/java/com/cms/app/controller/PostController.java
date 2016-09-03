@@ -13,10 +13,15 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,14 +45,14 @@ public class PostController{
 
     @RequestMapping(value = "/post/create", method = RequestMethod.POST)
     public String createPost(@ModelAttribute("postForm") Post post, @RequestParam String action,BindingResult result,
-                        Model model,HttpServletRequest request) {
+                        Model model,HttpServletRequest request, final RedirectAttributes redirectAttributes) {
 
         if (action.equals("preview")) {
             post.setStatus(PostStatus.Draft);
             CustomUtill.converStringfromByte(post);
-            model.addAttribute("post", post);
+            redirectAttributes.addFlashAttribute("post", post);
 
-            return "page";
+            return "redirect:/post/preview";
         } else if (action.equals("draft")) {
             post.setStatus(PostStatus.Draft);
             postService.createPost(post);
@@ -97,10 +102,22 @@ public class PostController{
     @RequestMapping(value = "/post/state", method = RequestMethod.POST)
     public String changeState(HttpServletResponse response,HttpServletRequest request, Model model ) {
         int id = ServletRequestUtils.getIntParameter(request, "id", 0);
+        String date = ServletRequestUtils.getStringParameter(request, "date","");
+        DateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         if(id > 0){
             Post post = postService.get(id);
             PostStatus status = post.getStatus();
             post.setStatus(status.next());
+            if(post.getStatus() == PostStatus.Published){
+                if(date.trim().length()>0){
+                    try {
+                        post.setPublish(sourceFormat.parse(date));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                post.setPublish(new Date());
+            }
             postService.updatePost(post);
         }
 
@@ -121,4 +138,29 @@ public class PostController{
         }
     }
 
-}
+    @RequestMapping(value = "/post/preview", method = RequestMethod.GET)
+    public String showPreview(HttpServletResponse response,HttpServletRequest request, Model model, @ModelAttribute("post") final Post post ) {
+        model.addAttribute("post",post);
+        return "page";
+    }
+
+    @RequestMapping(value = "/post/previews", method = RequestMethod.POST)
+    public String previews(HttpServletResponse response,HttpServletRequest request, Model model,final RedirectAttributes redirectAttributes ) {
+        int id = ServletRequestUtils.getIntParameter(request, "id", 0);
+        Post post = postService.get(id);
+        CustomUtill.converStringfromByte(post);
+        redirectAttributes.addFlashAttribute("post", post);
+
+        return "redirect:/post/preview";
+    }
+    @RequestMapping(value = "/post/edit", method = RequestMethod.POST)
+    public String edit(HttpServletResponse response,HttpServletRequest request, Model model,final RedirectAttributes redirectAttributes ) {
+        int id = ServletRequestUtils.getIntParameter(request, "id", 0);
+        Post post = postService.get(id);
+        CustomUtill.converStringfromByte(post);
+        model.addAttribute("post", post);
+        return "home";
+    }
+
+
+    }

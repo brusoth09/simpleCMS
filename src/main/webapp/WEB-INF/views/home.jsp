@@ -51,6 +51,16 @@
             openPreview();
         });
 
+        if($('#post-title').val() == ''){
+            $('#preview-button').prop("disabled",true);
+            $('#drafts-button').prop("disabled",true);
+            $('#rp-button').prop("disabled",true);
+        } else {
+            $('#preview-button').prop("disabled",false);
+            $('#drafts-button').prop("disabled",false);
+            $('#rp-button').prop("disabled",false);
+        }
+
         $(document.body).on('input', '#post-title' ,function(){
             if($('#post-title').val() == ''){
                 $('#preview-button').prop("disabled",true);

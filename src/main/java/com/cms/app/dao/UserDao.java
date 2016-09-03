@@ -60,4 +60,13 @@ public class UserDao {
         session.close();
         return result;
     }
+
+    public boolean checkUserName(String username) {
+        Session session = this.sessionFactory.openSession();
+        Query query = session.createQuery("From User u where u.username = :username");
+        query.setParameter("username", username);
+        List<User> result = (List<User>)query.list();
+        session.close();
+        return result.size() > 0;
+    }
 }

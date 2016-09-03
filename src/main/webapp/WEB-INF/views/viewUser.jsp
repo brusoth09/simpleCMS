@@ -29,6 +29,18 @@
                                     <p><c:out value="${post.content}"/> </p>
                                     <br>
                                 </div>
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <form class="col-md-2" action="${pageContext.request.contextPath}/post/previews" method="post">
+                                            <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>
+                                            <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">Preview</button>
+                                        </form>
+                                        <form class="col-md-2" action="${pageContext.request.contextPath}/post/edit" method="post">
+                                            <input type="hidden" name="id" value="${post.blog_post_id}" readonly="readonly"/>
+                                            <button type="submit" name="action" class="btn btn-primary btn-sm" value="change">Edit</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </c:forEach>
                             <%--<div id="cover-image" style="background-image: url(${post.image_path})">--%>

@@ -16,6 +16,7 @@ public class Post {
     private String content;
     private PostStatus status;
     private byte[] image;
+    private Date publish;
     private Date created;
     private Date modified;
     private String username;
@@ -114,5 +115,15 @@ public class Post {
     @PreUpdate
     protected void onPreUpdate() {
         this.modified = new Date();
+    }
+
+    @Column(name = "publish", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getPublish() {
+        return publish;
+    }
+
+    public void setPublish(Date publish) {
+        this.publish = publish;
     }
 }

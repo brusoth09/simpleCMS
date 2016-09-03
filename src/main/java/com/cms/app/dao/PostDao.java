@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class PostDao {
     public Post save(Post post) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
+        post.setCreated(new Date());
+        post.setModified(new Date());
         session.save(post);
         tx.commit();
         session.close();
@@ -34,6 +37,7 @@ public class PostDao {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         session.update(post);
+        post.setModified(new Date());
         tx.commit();
         session.close();
         return post;

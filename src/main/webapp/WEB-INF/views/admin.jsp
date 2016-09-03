@@ -31,20 +31,38 @@
     <div class="tab-content">
         <div class="tab-pane fade active in" id="home">
             <h2>Create Editor</h2>
+            <c:if test="${not empty msg}">
+                <div id="success-alert" class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    <h4><i class="icon fa fa-check"></i> User Created!</h4>
+                    User created successfully.
+                </div>
+            </c:if>
+            <c:if test="${not empty error}">
+                <div id="success-alert" class="alert alert-error alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    <h4><i class="icon fa fa-check"></i> Error While Creating User!</h4>
+                    ${error}
+                </div>
+            </c:if>
             <form:form class="well" method="post" modelAttribute="userForm" action="${pageContext.request.contextPath}/user/create">
-                <div class="form-group row">
+                <spring:bind path="username">
+                <div class="form-group row  ${status.error ? 'has-error' : ''}">
                     <label for="example-text-input" class="col-xs-2 col-form-label">Username</label>
                     <div class="col-xs-10">
-                        <form:input path="username" class="form-control" type="text" value="" id="example-text-input"/>
+                        <form:input path="username" class="form-control" type="text" value="" id="username"/>
+                        <form:errors path="username" class="control-label" />
                     </div>
                 </div>
-                <div class="form-group row">
+                </spring:bind>
+                <div class="form-group row ${status.error ? 'has-error' : ''}">
                     <label for="example-password-input" class="col-xs-2 col-form-label">Password</label>
                     <div class="col-xs-10">
-                        <form:input path="password" class="form-control" type="password" value="" id="example-password-input"/>
+                        <form:input path="password" class="form-control" type="password" value="" id="password"/>
+                        <form:errors path="password" class="control-label" />
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Create Editor</button>
+                <button type="submit" id="c-editor" class="btn btn-primary">Create Editor</button>
             </form:form>
         </div>
         <div class="tab-pane fade" id="editors">
@@ -87,5 +105,27 @@
 
 </div>
 </div>
+<script>
+    jQuery(document).ready(function($) {
+//        if($('#username').val() == '' || $('#password').val() == ''){
+//            $('#c-editor').prop("disabled",true);
+//        } else {
+//            $('#c-editor').prop("disabled",false);
+//        }
+
+//        $(document.body).on('input', '#username,#password' ,function(){
+//            if($('#username').val() == '' || $('#password').val() == ''){
+//                $('#c-editor').prop("disabled",true);
+//            } else {
+//                $('#c-editor').prop("disabled",false);
+//            }
+//        });
+
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#success-alert").alert('close');
+        });
+
+    });
+</script>
 </body>
 </html>

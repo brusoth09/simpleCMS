@@ -48,4 +48,8 @@ public class UserService {
         user.setEnabled(!user.isEnabled());
         userDao.updateUserEnabled(user);
     }
+
+    public boolean checkUserName(String username) {
+        return userDao.checkUserName(username);
+    }
 }
